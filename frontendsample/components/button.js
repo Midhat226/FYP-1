@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Gill Sans',
     textAlign: 'center',
     margin: 10,
-    color: '#ffffff',
+    color: 'black',
     backgroundColor: 'transparent',
   },
 });

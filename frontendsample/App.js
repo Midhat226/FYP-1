@@ -1,7 +1,6 @@
-import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, View, SafeAreaView,TouchableOpacity,Dimensions,} from "react-native";
 import GradientButton from "./components/button"
-import TransparentTextInput from "./components/textInput"
+import Header from "./components/header"
 import { Video } from "expo-av";
 const { height } = Dimensions.get("window");
 
@@ -17,8 +16,11 @@ export default function App() {
         isLooping
         style={styles.backgroundVideo}
       />
-      <GradientButton text="Login" />
-      <GradientButton text="Sign Up" />
+      <View style={styles.card}>
+       <Header title="Dastras" />
+        <GradientButton text="Login" />
+        <GradientButton text="Sign Up" />
+      </View>
     </View>
   );
 }
@@ -37,5 +39,16 @@ const styles = StyleSheet.create({
     flex: 1,  // Fill the entire screen
     alignItems: 'center',  // Center align the content
     justifyContent: 'center'  // Center align the content
-  }
+  },
+    card: {
+    width: '80%',
+    background: 'linear-gradient(to right, #ffffff, #b2fff5, #00ffdc)',
+    borderRadius: 30,
+    padding: 20,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.50,
+    shadowRadius: 6,
+    elevation: 5,
+  },
 });
