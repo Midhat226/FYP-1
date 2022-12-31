@@ -1,0 +1,96 @@
+CREATE TABLE admin (
+    admin_username VARCHAR(25) NOT NULL PRIMARY KEY,
+    admin_password VARCHAR(25) NOT NULL
+);
+
+CREATE TABLE client (
+    client_cnic          VARCHAR(13) NOT NULL PRIMARY KEY,
+    client_name          VARCHAR(256) NOT NULL,
+    client_phone         VARCHAR(13) NOT NULL,
+    client_city          VARCHAR(256) NOT NULL,
+    client_address       VARCHAR(256) NOT NULL,
+    client_location      VARCHAR(256),
+);
+
+CREATE TABLE provider (
+    provider_cnic        VARCHAR(13) NOT NULL PRIMARY KEY,
+    provider_name        VARCHAR(256) NOT NULL,
+    provider_phone       VARCHAR(13) NOT NULL,
+    provider_city        VARCHAR(25) NOT NULL,
+    warningcount         INTEGER NOT NULL,
+    admin_admin_username VARCHAR(25) NOT NULL
+);
+
+
+CREATE TABLE client_provider_rating (
+    client_client_id     INTEGER NOT NULL,
+    provider_provider_id INTEGER NOT NULL,
+    rating               INTEGER NOT NULL,
+    comments             VARCHAR(256)
+);
+
+CREATE TABLE provider_client_rating (
+    provider_provider_id INTEGER NOT NULL,
+    client_client_id     INTEGER NOT NULL,
+    rating_id            INTEGER,
+    rating               INTEGER,
+    comments             VARCHAR(256)
+);
+
+CREATE TABLE request (
+    client_client_id     INTEGER NOT NULL,
+    provider_provider_id INTEGER NOT NULL,
+    request_id           INTEGER NOT NULL,
+    type                 VARCHAR(256) NOT NULL,
+    time                 TIMESTAMP NOT NULL,
+    "Date"               DATE NOT NULL,
+    duration_hrs         INTEGER NOT NULL,
+    duration_mins        INTEGER NOT NULL,
+    price                INTEGER NOT NULL,
+    status               VARCHAR(256) NOT NULL
+);
+
+ALTER TABLE request ADD CONSTRAINT request_pk PRIMARY KEY ( client_client_id,
+                                                            provider_provider_id );
+
+ALTER TABLE client
+    ADD CONSTRAINT client_admin_fk FOREIGN KEY ( admin_admin_username )
+        REFERENCES admin ( admin_username );
+
+--  ERROR: FK name length exceeds maximum allowed length(30) 
+ALTER TABLE client_provider_rating
+    ADD CONSTRAINT client_provider_rating_client_fk FOREIGN KEY ( client_client_id )
+        REFERENCES client ( client_id );
+
+--  ERROR: FK name length exceeds maximum allowed length(30) 
+ALTER TABLE client_provider_rating
+    ADD CONSTRAINT client_provider_rating_provider_fk FOREIGN KEY ( provider_provider_id )
+        REFERENCES provider ( provider_id );
+
+ALTER TABLE provider
+    ADD CONSTRAINT provider_admin_fk FOREIGN KEY ( admin_admin_username )
+        REFERENCES admin ( admin_username );
+
+--  ERROR: FK name length exceeds maximum allowed length(30) 
+ALTER TABLE provider_client_rating
+    ADD CONSTRAINT provider_client_rating_client_fk FOREIGN KEY ( client_client_id )
+        REFERENCES client ( client_id );
+
+--  ERROR: FK name length exceeds maximum allowed length(30) 
+ALTER TABLE provider_client_rating
+    ADD CONSTRAINT provider_client_rating_provider_fk FOREIGN KEY ( provider_provider_id )
+        REFERENCES provider ( provider_id );
+
+ALTER TABLE request
+    ADD CONSTRAINT request_client_fk FOREIGN KEY ( client_client_id )
+        REFERENCES client ( client_id );
+
+ALTER TABLE request
+    ADD CONSTRAINT request_provider_fk FOREIGN KEY ( provider_provider_id )
+        REFERENCES provider ( provider_id );
+
+ALTER TABLE client_provider_rating ADD CONSTRAINT client_provider_rating_pk PRIMARY KEY ( client_client_id,
+                                                                                          provider_provider_id );
+
+ALTER TABLE provider_client_rating ADD CONSTRAINT provider_client_rating_pk PRIMARY KEY ( provider_provider_id,
+                                                                                          client_client_id );
