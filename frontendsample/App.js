@@ -22,12 +22,16 @@ export default function App() {
         style={styles.backgroundVideo}
       />
       <GlassUI>
-      <MyDatePicker/>
       <Header title="Dastras" />
        <TextBox placeholder="Phone Number" />
        <TextBox placeholder="Email" />
-      <GradientButton text="Login" />
-      <GradientButton text="Sign Up" />
+      <GradientButton text="Login" onPress={() => {
+          console.log("Login Pressed");
+        }} />
+      <GradientButton text="Sign Up" onPress={() => {
+          console.log("Signup Pressed");
+        }}/>
+         <MyDatePicker/>
       </GlassUI>
     </View>
   );

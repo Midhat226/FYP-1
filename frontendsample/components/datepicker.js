@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Button, Modal } from 'react-native';
+import GradientButton from "./button"
 import { Calendar } from 'react-native-calendars';
 
 function MyDatePicker() {
@@ -8,8 +9,8 @@ function MyDatePicker() {
 
   return (
     <View>
-      <Button
-        title="Select a date"
+      <GradientButton
+        text="Select a date"
         onPress={() => {
           setShowCalendar(true);
         }}
