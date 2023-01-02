@@ -1,14 +1,15 @@
-import {StyleSheet, Text, View, SafeAreaView,TouchableOpacity,Dimensions,} from "react-native";
-import { LinearGradient } from 'expo-linear-gradient';
-import GradientButton from "./components/button"
-import Header from "./components/header"
+import {StyleSheet, View,Dimensions} from "react-native";
+import {useState} from 'react';
 import { Video } from "expo-av";
 const { height } = Dimensions.get("window");
+import GradientButton from "./components/button"
+import Header from "./components/header"
+import GlassUI from "./components/glassUI"
+import TextBox from "./components/textBox"
+// import MyDropdown from "./components/dropdown"
+import MyDatePicker from "./components/datepicker"
 
 export default function App() {
-  const gradientColors = ['#ffffff', '#b2fff5', '#00ffdc'];
-  const gradientStart = { x: 0, y: 0 };
-  const gradientEnd = { x: 1, y: 0 };
   return (
     <View style={styles.container}>
       <Video
@@ -20,19 +21,26 @@ export default function App() {
         isLooping
         style={styles.backgroundVideo}
       />
-     <LinearGradient colors={gradientColors} start={gradientStart} end={gradientEnd}>
-      <View style={styles.card}>
-       <Header title="Dastras" />
+      <GlassUI>
+      <MyDatePicker/>
+      <Header title="Dastras" />
+       <TextBox placeholder="Phone Number" />
+       <TextBox placeholder="Email" />
       <GradientButton text="Login" />
-      <GradientButton text="Sign Up" />
-      </View>
-    </LinearGradient>
+      <GradientButton text="Sign Up" />
+      </GlassUI>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  backgroundVideo: {
+  container: {
+    flex: 1,  // Fill the entire screen
+    alignItems: 'center',  // Center align the content
+    justifyContent: 'center',  // Center align the content
+    zIndex: 1,  // Set the zIndex to 1
+  },
+    backgroundVideo: {
     height: height,
     position: "absolute",
     top: 0,
@@ -40,21 +48,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     bottom: 0,
     right: 0,
-  },
-  container: {
-    flex: 1,  // Fill the entire screen
-    alignItems: 'center',  // Center align the content
-    justifyContent: 'center'  // Center align the content
-  },
-card: {
-  width: 300,
-  height: 450,
-  borderRadius: 40,
-  padding: 50,
-  shadowColor: 'black',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.50,
-  shadowRadius: 6,
-  elevation: 5,
-  },
+  }
 });
+
